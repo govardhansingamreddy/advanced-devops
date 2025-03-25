@@ -1,0 +1,24 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set Environment Variables
+      env:
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+        APP_PORT: ${{ secrets.APP_PORT }}
+      run: |
+        echo "NODE_ENV=$NODE_ENV"
+        echo "APP_PORT=$APP_PORT"
+    - name: Install Dependencies
+      run: npm install
+    - name: Deploy
+      run: echo "Deploying app on port $APP_PORT..."
